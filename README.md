@@ -8,7 +8,7 @@ One self-contained notebook: all logic lives in the cells with `#@param` form fi
 
 Opens in Colab, ready to run:
 
-**[comfy_colab.ipynb](https://colab.research.google.com/github/nerkn/comfy-colab/blob/main/comfy_colab.ipynb)**
+**[comfy_colab.ipynb](https://colab.research.google.com/github/gemeyilim/comfy-colab/blob/main/comfy_colab.ipynb)**
 
 1. **Runtime → Change runtime type → T4 GPU** (free tier)
 2. Run cells **1 → 3** once (setup, optional video models, server).
