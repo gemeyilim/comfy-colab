@@ -1,0 +1,14 @@
+output/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.mp4
+*.webm
+*.safetensors
+*.gguf
+*.ckpt
+*.pth
+__pycache__/
+*.pyc
+.DS_Store
