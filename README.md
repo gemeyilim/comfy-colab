@@ -30,6 +30,38 @@ models (cell 2) are optional — skip if you only want images.
 | 4 | Generate · SDXL image | Build workflow, POST to API, poll, save PNG |
 | 5 | Generate · Wan2.2 video | Build workflow, POST to API, poll, save WEBM |
 | 6 | Display last result | Show the most recent image or video inline |
+| 7 | Generate · Photo→Video | N persona photos → one prompt → one video per photo (Wan2.2 I2V) |
+| 8 | Generate · Persona anchor | One prompt → the identity reference image (FLUX.1-dev T2I); saved as `input/persona_ref.png` |
+| 9 | Generate · Identity scene | Put the persona in a new scene, preserving her face (FLUX.1-Kontext edit); saved as `input/persona_scene.png` |
+
+## Persona → scene → video (cells 8 → 9 → 7)
+
+You don't need a photo. Build a persona from a description, drop her into scenes,
+then animate. Each cell is prompt-driven and self-sufficient (downloads its own
+models, idempotent).
+
+1. **Cell 8** — `persona` prompt (English) → `input/persona_ref.png`. Run **once per
+   persona**. Model: FLUX.1-dev GGUF (T2I). The default prompt is a detailed face.
+2. **Cell 9** — `scene_prompt` (English) → `input/persona_scene.png`. Edits the anchor
+   with **FLUX.1-Kontext** (identity-preserving). Always edits `persona_ref.png`.
+   Re-run for each new scene (study, chill, math…).
+3. **Cell 7** — `photos="persona_scene.png"` (already the default) + motion prompt →
+   `.webm` via Wan2.2 I2V.
+
+FLUX (8/9) is **English-only**; translate TR prompts. The Wan video cell (7) takes
+Turkish directly (umt5 is multilingual).
+
+## Photo → Video (cell 7)
+
+Wan2.2 is **text + image to video** (TI2V): the start photo becomes frame 1 and
+defines the person; the prompt drives the motion. One prompt can loop over **N
+photos** to make one video per persona. Cells 8/9 produce these photos for you.
+
+- Put photos in `ComfyUI/input/` (upload via the file browser, or let pi POST them
+  to the `/upload/image` endpoint over the tunnel).
+- Set `photos` = comma-separated filenames (`ayse.png, fatma.png, hayriye.png`),
+  or leave blank to be prompted to upload.
+- Run cell 7, then re-run cell 6 to view the last result.
 
 ## Iterate
 
