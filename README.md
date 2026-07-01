@@ -74,6 +74,22 @@ for variations. `#@param` fields (seed, width, height, steps, frames) give a for
 - The Wan2.2 video cell uses the **GGUF Q4_K_M** quant (3.3 GB) so it fits the T4's 15 GB VRAM; it needs the ComfyUI-GGUF custom node (installed automatically in cell 1).
 - Everything targets the free T4. Larger models (e.g. text-in-image like Ideogram-4) need more than 15 GB and won't fit the free tier.
 
+## Status & next
+
+Persona pipeline **verified end-to-end on a free T4** (2026-06): anchor (FLUX-dev)
+→ identity scene (FLUX-Kontext) → video (Wan2.2 I2V). All cells work.
+
+Known gap: prompting a **facial expression** ("smiles") into Wan2.2 yields an uncanny,
+morphing face — that's a class limit of cheap I2V, not a bug. Workarounds: motion-only
+prompts (no acting), fewer frames, lower CFG.
+
+Models to evaluate next, T4-fit:
+- **LTX-Video** — faster, better-motion I2V swap for Wan2.2.
+- **LivePortrait** — identity-preserving face animation from one photo; the right tool
+  for a real smile/talk.
+
+See `HOWTO.md` for the full run log and reasoning.
+
 ## License
 
 MIT
